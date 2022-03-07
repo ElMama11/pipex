@@ -3,16 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mverger <mverger@42lyon.fr>                +#+  +:+       +#+         #
+#    By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/23 05:45:53 by jjaouen           #+#    #+#              #
-#    Updated: 2022/03/01 15:52:39 by mverger          ###   ########.fr        #
+#    Updated: 2022/03/07 17:05:32 by mverger          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 GCCF = gcc -g #-Wall -Werror -Wextra
-ICON_PATH=./Contents/Resources/icon/scop.ico
 GREEN       = \033[32m
 RED         = \033[31m
 DEFAULT     = \033[37m
@@ -20,10 +19,9 @@ PATHOBJ = obj/
 PATHSRC = src/
 INCLUDE_PATH=include
 DEP = Makefile src/$(INCLUDE_PATH)/pipex.h
-SRC =   main.c
+SRC =   main.c ft_split.c ft_strtrim.c
 		
-HEAD = -I ./src/$(INCLUDE_PATH)/ -I libft/
-LIBFT = ./libft/libft.a
+HEAD = -I ./src/$(INCLUDE_PATH)/ -I
 OBJ = $(patsubst %.c,$(PATHOBJ)/%.o,$(SRC))
 
 ifeq ($(shell uname),Darwin)
@@ -34,17 +32,12 @@ endif
 
 all: $(NAME)
 
-libft: $(LIBFT)
-
 $(PATHOBJ):
 	@mkdir -p obj
 
-$(LIBFT):
-	@make -C ./libft/
-
-$(NAME): $(DEP) $(LIBFT) $(addprefix $(PATHSRC)/,$(SRC)) $(PATHOBJ) $(OBJ)
+$(NAME): $(DEP) $(addprefix $(PATHSRC)/,$(SRC)) $(PATHOBJ) $(OBJ)
 	@$(ECHO) "\r$(GREEN) The .o from $(NAME) are compiled.$(DEFAULT)"
-	@$(GCCF) $(OBJ) $(LIBFT) -o $(NAME)
+	@$(GCCF) $(OBJ) -o $(NAME)
 	@$(ECHO) "$(GREEN)$(NAME)$(DEFAULT) created."
 
 $(PATHOBJ)/%.o: $(PATHSRC)/%.c
