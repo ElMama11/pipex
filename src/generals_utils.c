@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 18:22:58 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/12 18:23:40 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/12 19:57:11 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,17 @@ char	*ft_sstrjoin(char const *s1, char const *s2)
 		str_malloc[i++] = s2[j++];
 	str_malloc[i] = '\0';
 	return (str_malloc);
+}
+
+void	ft_free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
