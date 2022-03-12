@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   generals_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/10 15:17:46 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/07 17:08:23 by mverger          ###   ########.fr       */
+/*   Created: 2022/03/12 18:22:58 by mverger           #+#    #+#             */
+/*   Updated: 2022/03/12 18:23:40 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,42 @@ char	*ft_strtrim(char const *s1, char const *set)
 		output_str[i++] = s1[start++];
 	output_str[i] = '\0';
 	return (output_str);
+}
+
+int	ft_strlen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+char	*ft_sstrjoin(char const *s1, char const *s2)
+{
+	int		i;
+	int		j;
+	char	*str_malloc;
+
+	str_malloc = NULL;
+	i = 0;
+	j = 0;
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	str_malloc = (char *)malloc((i + j + 2) * sizeof(char));
+	if (str_malloc == NULL)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[i])
+		str_malloc[i++] = s1[j++];
+	str_malloc[i++] = '/';
+	j = 0;
+	while (s2[j])
+		str_malloc[i++] = s2[j++];
+	str_malloc[i] = '\0';
+	return (str_malloc);
 }

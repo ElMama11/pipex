@@ -6,7 +6,7 @@
 #    By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/23 05:45:53 by jjaouen           #+#    #+#              #
-#    Updated: 2022/03/07 17:05:32 by mverger          ###   ########.fr        #
+#    Updated: 2022/03/12 18:31:48 by mverger          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ PATHOBJ = obj/
 PATHSRC = src/
 INCLUDE_PATH=include
 DEP = Makefile src/$(INCLUDE_PATH)/pipex.h
-SRC =   main.c ft_split.c ft_strtrim.c
+SRC =   main.c ft_split.c generals_utils.c \
+		init_struct.c
 		
 HEAD = -I ./src/$(INCLUDE_PATH)/ -I
 OBJ = $(patsubst %.c,$(PATHOBJ)/%.o,$(SRC))
