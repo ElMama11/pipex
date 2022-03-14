@@ -6,7 +6,7 @@
 #    By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/23 05:45:53 by jjaouen           #+#    #+#              #
-#    Updated: 2022/03/12 19:54:49 by mverger          ###   ########.fr        #
+#    Updated: 2022/03/13 18:28:18 by mverger          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ INCLUDE_PATH=include
 DEP = Makefile src/$(INCLUDE_PATH)/pipex.h
 SRC =   main.c ft_split.c generals_utils.c \
 		init_struct.c cmd_process.c \
-		test_infile_access.c
+		test_infile_access.c memory.c
 		
 HEAD = -I ./src/$(INCLUDE_PATH)/ -I
 OBJ = $(patsubst %.c,$(PATHOBJ)/%.o,$(SRC))

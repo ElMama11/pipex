@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:47:23 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/12 19:57:59 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/13 18:36:02 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,8 @@ void	exec_cmd(t_global *global, int cmd);
 
 /* test_infile_access.c */
 int	test_infile_access(t_global *global);
+
+/* memory.c */
+void free_all(t_global *global);
 
 #endif
