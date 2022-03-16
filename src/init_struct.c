@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 18:31:14 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/12 18:31:33 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/14 16:50:39 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void init_struct(t_global *global, char **av, char **env)
 	global->outfile = av[4];
 	global->envv = env;
 	global->infile_fd = open(global->infile, O_RDONLY);
-	global->outfile_fd = open(global->outfile, O_CREAT | O_RDWR | O_TRUNC);
-	if (global->infile_fd == -1 || global->outfile_fd == -1)
-		perror("Open failed : ");
+	if (global->infile_fd == -1)
+		perror("infile open failed ");
+	global->outfile_fd = open(global->outfile, O_CREAT | O_RDWR | O_TRUNC, 0777);
+	if (global->outfile_fd == -1)
+		perror("outfile open failed ");
 }

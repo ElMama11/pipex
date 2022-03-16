@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 19:54:16 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/12 19:54:28 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/14 17:10:27 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	test_infile_access(t_global *global)
 		return (0);
 	else
 	{
-		perror("infile access : ");
 		return (-1);
 	}	
 }
