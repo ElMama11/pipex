@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 19:14:16 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/14 17:18:45 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/19 14:52:42 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	exec_cmd(t_global *global, int cmd)
 		}
 	}
 	write(2, "command not found\n", 18);
-	//perror("");
 	exit(EXIT_FAILURE);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:55:17 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/14 17:16:26 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/19 14:45:18 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,11 @@ void	pipex(t_global *global)
 	}
 	if (child == 0)
 		cmd1_process(global, pipefd);
-	else
+	else 
 	{
 		cmd2_process(global, pipefd);
 		waitpid(child, &status, 0);
-	}
-	//close les pipe ?
+	}	//close les pipe ?
 }
 
 int	main(int ac, char **av, char **env)
