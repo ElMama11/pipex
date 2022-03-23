@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:55:17 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/21 18:57:54 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/23 20:47:25 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	secure_open(char *file, int flag)
 	return (fd);
 }
 
-void	pipex(t_global *global)
+void	pipex(t_global *global, char *cmd)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -31,7 +31,7 @@ void	pipex(t_global *global)
 	if (pipe(fd) == -1)
 		error_exit("pipe");
 	pid = fork();
-	if (pid < 0)
+	if (pid == -1)
 		error_exit("fork");
 	if (pid > 0)
 	{
@@ -47,7 +47,7 @@ void	pipex(t_global *global)
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
-		exec_cmd(global);
+		exec_cmd(global, cmd);
 	}
 }
 
@@ -72,11 +72,10 @@ int	main(int ac, char **av, char **env)
 			dup2(global.infile_fd, STDIN_FILENO);
 			i = 1;
 		}
-		global.cmd = ft_split(av[i + 1], ' ');
 		while (++i < ac - 2)
-			pipex(&global); //incrementer commande
+			pipex(&global, av[i]);
 		dup2(global.outfile_fd, STDOUT_FILENO);
-		exec_cmd(&global);
+		exec_cmd(&global, av[i]);
 	}
 	ft_putstr_fd("Error: invalid arguments\n", STDERR_FILENO);
 	return (EXIT_FAILURE);

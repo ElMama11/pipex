@@ -6,25 +6,24 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 19:14:16 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/21 18:51:53 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/23 19:52:06 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	exec_cmd(t_global *global)
+void	exec_cmd(t_global *global, char *cmd)
 {
 	char		*cmd_path;
 	char		**args;
 	int			i;
 
 	i = 0;
-	// if (*args[0] == '/' || *args[0] == '.' || *args[0] == '~')
-	// 	cmd_path = args[0];
+	args = ft_split(cmd, ' ');
 	while (global->path[i])
 	{
-		cmd_path = ft_sstrjoin(global->path[i], global->cmd[0]);
-		execve(cmd_path, global->cmd, global->envv);
+		cmd_path = ft_path_strjoin(global->path[i], args[0]);
+		execve(cmd_path, args, global->envv);
 		free(cmd_path);
 		i++;
 	}

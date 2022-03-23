@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 18:22:58 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/19 15:35:42 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/23 19:51:51 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_sstrjoin(char const *s1, char const *s2)
+char	*ft_path_strjoin(char const *s1, char const *s2)
 {
 	int		i;
 	int		j;
@@ -109,3 +109,5 @@ int	ft_strncmp(const char *s1, const char *s2, int n)
 	}
 	return (0);
 }
+
+

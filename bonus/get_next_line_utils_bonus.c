@@ -1,66 +1,80 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 20:19:49 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/19 17:40:18 by mverger          ###   ########.fr       */
+/*   Created: 2022/03/23 19:53:44 by mverger           #+#    #+#             */
+/*   Updated: 2022/03/23 19:54:20 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-int	ft_check_buffer(char *buffer)
-{
-	int	i;
-
-	i = 0;
-	while (i <= BUFFER_SIZE)
-	{
-		if (buffer[i] != '\0')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	ft_islinefeed(char *buffer)
-{
-	int	i;
-
-	i = 0;
-	while (buffer[i] == '\0')
-		i++;
-	while (buffer[i])
-	{
-		if (buffer[i] == '\n')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-char	*ft_strjoin(char *output_temp, char *buffer)
+char	*ft_strdup(const char *s1)
 {
 	int		i;
-	int		j;
-	char	*output;
+	char	*str_malloc;
 
 	i = 0;
-	j = 0;
-	if (output_temp == NULL && buffer == NULL)
+	while (s1[i])
+		i++;
+	str_malloc = (char *) malloc((i + 1) * sizeof(char));
+	if (str_malloc == NULL)
 		return (NULL);
-	output = (char *)malloc((ft_strlen(output_temp) + ft_strlen(buffer) + 1)
-			* sizeof(char));
-	if (output == NULL)
-		return (NULL);
-	while (output_temp != NULL && output_temp[i])
+	i = 0;
+	while (s1[i])
 	{
-		output[i] = output_temp[i];
+		str_malloc[i] = s1[i];
 		i++;
 	}
-	free(output_temp);
-	return (output = copy_without_linefeed(buffer, output, i));
+	str_malloc[i] = '\0';
+	return (str_malloc);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	unsigned char	to_find;
+
+	to_find = (unsigned char)c;
+	if (to_find == '\0')
+	{
+		while (to_find != *s)
+		{
+			s++;
+		}
+		return ((char *)s);
+	}
+	while (*s != '\0')
+	{
+		if (to_find == *s)
+			return ((char *)s);
+		s++;
+	}
+	return (NULL);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	char	*str_malloc;
+
+	str_malloc = NULL;
+	if (s == NULL)
+		return (NULL);
+	i = ft_strlen(s);
+	if (start >= i)
+		return (ft_strdup("\0"));
+	if (len >= i - start)
+		str_malloc = (char *)malloc(((i - start) + 1) * sizeof(char));
+	else if (len < i - start)
+		str_malloc = (char *)malloc((len + 1) * sizeof(char));
+	if (str_malloc == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len && i <= ft_strlen(s))
+		str_malloc[i++] = s[start++];
+	str_malloc[i] = '\0';
+	return (str_malloc);
 }

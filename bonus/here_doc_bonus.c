@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 15:19:06 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/20 15:27:05 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/23 19:58:56 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	ft_putstr_fd(char *s, int fd)
 		write(fd, &s[i++], 1);
 }
 
-/* handle here document read until limiter */
 void	handle_read_hd(char *argv, int fd[2])
 {
 	char	*line;
@@ -31,7 +30,7 @@ void	handle_read_hd(char *argv, int fd[2])
 
 	limiter = ft_strjoin(argv, "\n");
 	close(fd[0]);
-	line = get_next_line(STDIN_FILENO);
+	line = ft_get_next_line(STDIN_FILENO);
 	while (line)
 	{
 		if (!ft_strncmp(line, limiter, ft_strlen(limiter) + 1))
@@ -43,14 +42,13 @@ void	handle_read_hd(char *argv, int fd[2])
 		}
 		ft_putstr_fd(line, fd[1]);
 		free(line);
-		line = get_next_line(STDIN_FILENO);
+		line = ft_get_next_line(STDIN_FILENO);
 	}
 	close(1);
 	free(line);
 	free(limiter);
 }
 
-/* handle here document "<<" */
 void	handle_here_doc(char *argv)
 {
 	int		pipe_fd[2];
@@ -69,7 +67,5 @@ void	handle_here_doc(char *argv)
 		waitpid(pid, NULL, 0);
 	}
 	else
-	{
 		handle_read_hd(argv, pipe_fd);
-	}
 }

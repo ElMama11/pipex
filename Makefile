@@ -6,7 +6,7 @@
 #    By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 14:44:07 by mverger           #+#    #+#              #
-#    Updated: 2022/03/20 17:24:02 by mverger          ###   ########.fr        #
+#    Updated: 2022/03/23 20:26:51 by mverger          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC =   main.c ft_split.c generals_utils.c \
 
 SRCBONUS =	cmd_process_bonus.c ft_split_bonus.c generals_utils_bonus.c \
 			get_next_line_bonus.c get_next_line_utils_bonus.c here_doc_bonus.c \
-			init_struct_bonus.c main_bonus.c memory_bonus.c test_infile_access_bonus.c
+			init_struct_bonus.c main_bonus.c memory_bonus.c
 		
 HEAD = -I ./src/$(INCLUDE_PATH)/ -I
 OBJ = $(patsubst %.c,$(PATHOBJ)/%.o,$(SRC))
@@ -74,8 +74,7 @@ $(PATHOBJBONUS)/%.o: $(PATHSRCBONUS)/%.c
 clean:
 	@$(ECHO) "All $(RED).o$(DEFAULT) are now deleted for $(NAME)."
 	@rm -rf $(PATHOBJ)
-	@rm -rf $(PATHOBJBONUS
-	)
+	@rm -rf $(PATHOBJBONUS)
 
 fclean: clean
 	@$(ECHO) "$(RED)$(NAME)$(DEFAULT) is now deleted."

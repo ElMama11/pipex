@@ -1,106 +1,109 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:47:52 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/19 17:40:32 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/23 20:00:22 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-char	*copy_with_linefeed(char *buffer, char *output, int output_size)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	*str_malloc;
 
+	str_malloc = NULL;
 	i = 0;
-	while (buffer[i] == '\0')
-		i++;
-	while (buffer[i] != '\n')
+	j = 0;
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	str_malloc = (char *)malloc((i + j + 1) * sizeof(char));
+	if (str_malloc == NULL)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[i])
 	{
-		output[output_size] = buffer[i];
-		buffer[i] = '\0';
+		str_malloc[i] = s1[i];
 		i++;
-		output_size++;
 	}
-	buffer[i] = '\0';
-	output[output_size] = '\n';
-	output[output_size + 1] = '\0';
-	return (output);
+	while (s2[j])
+		str_malloc[i++] = s2[j++];
+	str_malloc[i] = '\0';
+	return (str_malloc);
 }
 
-char	*copy_without_linefeed(char *buffer, char *output, int temp_count)
+static char	*return_next_line(char **s)
 {
-	int	i;
+	char	*out;
+	char	*tmp;
+	size_t	len;
 
-	i = 0;
-	while (buffer[i] == '\0')
-		i++;
-	while (buffer[i])
+	len = 0;
+	out = NULL;
+	while ((*s)[len] != '\n' && (*s)[len])
+		len++;
+	if ((*s)[len] == '\n')
 	{
-		output[temp_count++] = buffer[i];
-		buffer[i++] = '\0';
+		out = ft_substr(*s, 0, len + 1);
+		tmp = ft_strdup(*s + len + 1);
+		free(*s);
+		*s = tmp;
+		if (!**s)
+		{
+			free(*s);
+			*s = NULL;
+		}
+		return (out);
 	}
-	buffer[i] = '\0';
-	output[temp_count] = '\0';
-	return (output);
+	out = ft_strdup(*s);
+	free(*s);
+	*s = NULL;
+	return (out);
 }
 
-char	*get_line(char *buffer, char *output, int read_output,
-	char *output_temp)
+static char	*check_and_return(char **s, ssize_t n, int fd)
 {
-	int	i;
-	int	output_size;
-	int	temp_count;	
-
-	temp_count = 0;
-	i = 0;
-	output_size = ft_strlen(output_temp);
-	while (buffer[i] != '\n' && i <= BUFFER_SIZE)
-		i++;
-	output = (char *)malloc(sizeof(char) * (i + 2 + output_size));
-	while (output_size != 0 && output_temp[temp_count])
-	{
-		output[temp_count] = output_temp[temp_count];
-		temp_count++;
-	}
-	free(output_temp);
-	i = 0;
-	if (ft_islinefeed(buffer))
-		return (output = copy_with_linefeed(buffer, output, output_size));
-	else if (read_output == 0)
-		return (output = copy_without_linefeed(buffer, output, temp_count));
-	return (NULL);
+	if (n < 0)
+		return (NULL);
+	if (!n && (!s[fd] || !*s[fd]))
+		return (NULL);
+	return (return_next_line(&s[fd]));
 }
 
-char	*get_next_line(int fd)
+char	*ft_get_next_line(int fd)
 {
-	int			read_output;
-	static char	buffer[BUFFER_SIZE + 1];
-	char		*output;
-	char		*output_temp;
+	char		*tmp;
+	char		*buf;
+	static char	*s[1];
+	ssize_t		n;
 
-	output_temp = NULL;
-	output = NULL;
-	if (fd < 0 || BUFFER_SIZE < 1)
-		return (0);
-	if (ft_check_buffer(buffer))
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	buf = malloc(BUFFER_SIZE + 1);
+	if (!buf)
+		return (NULL);
+	n = read(fd, buf, BUFFER_SIZE);
+	while (n > 0)
 	{
-		read_output = read(fd, buffer, BUFFER_SIZE);
-		if (read_output == -1 || read_output == 0)
-			return (NULL);
+		buf[n] = '\0';
+		if (!s[fd])
+			s[fd] = ft_strdup("");
+		tmp = ft_strjoin(s[fd], buf);
+		free(s[fd]);
+		s[fd] = tmp;
+		if (ft_strchr(buf, '\n'))
+			break ;
+		n = read(fd, buf, BUFFER_SIZE);
 	}
-	if (ft_islinefeed(buffer))
-		return (output = get_line(buffer, output, read_output, output_temp));
-	while (!(ft_islinefeed(buffer)))
-	{
-		output_temp = ft_strjoin(output_temp, buffer);
-		read_output = read(fd, buffer, BUFFER_SIZE);
-		if (read_output == 0)
-			return (output_temp);
-	}
-	return (output = get_line(buffer, output, read_output, output_temp));
+	free(buf);
+	return (check_and_return(s, n, fd));
 }
