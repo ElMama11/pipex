@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 15:19:06 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/23 19:58:56 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/23 21:35:55 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,19 @@ void	handle_read_hd(char *argv, int fd[2])
 void	handle_here_doc(char *argv)
 {
 	int		pipe_fd[2];
-	pid_t	pid;
+	pid_t	child;
 
 	if (pipe(pipe_fd) == -1)
 		error_exit("pipe");
-	pid = fork();
-	if (pid < 0)
+	child = fork();
+	if (child < 0)
 		error_exit("fork");
-	if (pid > 0)
+	if (child > 0)
 	{
 		close(pipe_fd[1]);
 		dup2(pipe_fd[0], STDIN_FILENO);
 		close(pipe_fd[0]);
-		waitpid(pid, NULL, 0);
+		waitpid(child, NULL, 0);
 	}
 	else
 		handle_read_hd(argv, pipe_fd);

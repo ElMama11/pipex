@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:55:17 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/23 20:47:25 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/23 21:21:55 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int ac, char **av, char **env)
 
 	int	i;
 	init_struct(&global, av, env);
-	if ((ac >= 5 && ft_strncmp(av[1], "here_doc", 9)) || ac >= 6)
+	if (ac >= 5)
 	{
 		if (!ft_strncmp(av[1], "here_doc", 9))
 		{
@@ -77,6 +77,6 @@ int	main(int ac, char **av, char **env)
 		dup2(global.outfile_fd, STDOUT_FILENO);
 		exec_cmd(&global, av[i]);
 	}
-	ft_putstr_fd("Error: invalid arguments\n", STDERR_FILENO);
+	write(2, "Error : numbers of args invalid\n", 32);
 	return (EXIT_FAILURE);
 }

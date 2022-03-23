@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 18:28:20 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/20 15:24:34 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/23 20:48:28 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ void	error_exit(char *str)
 void free_all(t_global *global)
 {
 	ft_free_tab(global->path);
-	ft_free_tab(global->cmd);
+	//ft_free_tab(global->cmd);
 	exit(1);
 }
