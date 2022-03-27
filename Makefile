@@ -6,13 +6,13 @@
 #    By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 14:44:07 by mverger           #+#    #+#              #
-#    Updated: 2022/03/23 20:26:51 by mverger          ###   ########.fr        #
+#    Updated: 2022/03/27 20:47:41 by mverger          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 NAMEBONUS = pipex_bonus
-GCCF = gcc -g #-Wall -Werror -Wextra
+GCCF = gcc -g -Wall -Werror -Wextra
 GREEN       = \033[32m
 RED         = \033[31m
 DEFAULT     = \033[37m
@@ -27,7 +27,7 @@ SRC =   main.c ft_split.c generals_utils.c \
 		test_infile_access.c memory.c
 
 SRCBONUS =	cmd_process_bonus.c ft_split_bonus.c generals_utils_bonus.c \
-			get_next_line_bonus.c get_next_line_utils_bonus.c here_doc_bonus.c \
+			ft_get_next_line_bonus.c ft_get_next_line_utils_bonus.c here_doc_bonus.c \
 			init_struct_bonus.c main_bonus.c memory_bonus.c
 		
 HEAD = -I ./src/$(INCLUDE_PATH)/ -I

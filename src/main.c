@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:55:17 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/23 21:33:50 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/26 15:29:37 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,17 @@ void	pipex(t_global *global)
 	pid_t	child;
 	int		status;
 	int		pipefd[2];
-	
+
 	pipe(pipefd);
 	child = fork();
 	if (child < 0)
 	{
 		perror("Fork");
 		free_all(global);
-		
 	}
 	if (child == 0)
 		cmd1_process(global, pipefd);
-	else 
+	else
 	{
 		cmd2_process(global, pipefd);
 		waitpid(child, &status, 0);
@@ -37,16 +36,16 @@ void	pipex(t_global *global)
 
 int	main(int ac, char **av, char **env)
 {
-	t_global global;
+	t_global	global;
 
 	if (ac != 5)
 	{
 		write(2, "Error : numbers of args invalid\n", 32);
-		exit(0);
+		exit(EXIT_FAILURE);
 	}
 	init_struct(&global, av, env);
 	if (test_infile_access(&global) == -1)
 		free_all(&global);
 	pipex(&global);
-	return (0);
+	exit(EXIT_FAILURE);
 }

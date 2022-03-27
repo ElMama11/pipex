@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 15:19:06 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/23 21:35:55 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/27 21:10:00 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	ft_putstr_fd(char *s, int fd)
 		write(fd, &s[i++], 1);
 }
 
-void	handle_read_hd(char *argv, int fd[2])
+void	handle_read_hd(char *argv, int pipe_fd[2])
 {
 	char	*line;
 	char	*limiter;
 
+	close(pipe_fd[0]);
 	limiter = ft_strjoin(argv, "\n");
-	close(fd[0]);
 	line = ft_get_next_line(STDIN_FILENO);
 	while (line)
 	{
@@ -40,7 +40,7 @@ void	handle_read_hd(char *argv, int fd[2])
 			free(limiter);
 			exit(EXIT_SUCCESS);
 		}
-		ft_putstr_fd(line, fd[1]);
+		ft_putstr_fd(line, pipe_fd[1]);
 		free(line);
 		line = ft_get_next_line(STDIN_FILENO);
 	}
@@ -49,16 +49,16 @@ void	handle_read_hd(char *argv, int fd[2])
 	free(limiter);
 }
 
-void	handle_here_doc(char *argv)
+void	handle_here_doc(t_global *global, char *argv)
 {
 	int		pipe_fd[2];
 	pid_t	child;
 
 	if (pipe(pipe_fd) == -1)
-		error_exit("pipe");
+		error_exit(global, "pipe");
 	child = fork();
 	if (child < 0)
-		error_exit("fork");
+		error_exit(global, "fork");
 	if (child > 0)
 	{
 		close(pipe_fd[1]);

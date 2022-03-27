@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   ft_get_next_line_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 17:47:52 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/23 20:00:22 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/27 21:16:58 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*return_next_line(char **s)
 {
 	char	*out;
 	char	*tmp;
-	size_t	len;
+	int		len;
 
 	len = 0;
 	out = NULL;
@@ -84,7 +84,7 @@ char	*ft_get_next_line(int fd)
 	char		*tmp;
 	char		*buf;
 	static char	*s[1];
-	ssize_t		n;
+	int			n;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);

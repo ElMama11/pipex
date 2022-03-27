@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:47:23 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/19 15:09:15 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/27 20:57:26 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_global {
 
 /* generals_utils.c */
 char	**ft_split(char const *s, char c);
-char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_strtrim(char *s1, char const *set);
 int		ft_strlen(const char *s);
 char	*ft_sstrjoin(char const *s1, char const *s2);
 void	ft_free_tab(char **tab);
@@ -44,7 +44,7 @@ void	ft_free_tab(char **tab);
 char	**ft_split(char const *s, char c);
 
 /* init_struct.c */
-void init_struct(t_global *global, char **av, char **env);
+void	init_struct(t_global *global, char **av, char **env);
 
 /* cmd_process.c */
 void	cmd1_process(t_global *global, int *pipefd);
@@ -52,9 +52,9 @@ void	cmd2_process(t_global *global, int *pipefd);
 void	exec_cmd(t_global *global, int cmd);
 
 /* test_infile_access.c */
-int	test_infile_access(t_global *global);
+int		test_infile_access(t_global *global);
 
 /* memory.c */
-void free_all(t_global *global);
+void	free_all(t_global *global);
 
 #endif

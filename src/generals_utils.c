@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 18:22:58 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/12 19:57:11 by mverger          ###   ########.fr       */
+/*   Updated: 2022/03/27 20:57:11 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	check_set(char c, char const *set)
 	return (0);
 }
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char *s1, char const *set)
 {
 	char	*output_str;
 	int		i;
@@ -51,6 +51,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (start != end)
 		output_str[i++] = s1[start++];
 	output_str[i] = '\0';
+	free(s1);
 	return (output_str);
 }
 
