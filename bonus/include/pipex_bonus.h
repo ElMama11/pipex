@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:47:23 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/27 21:10:34 by mverger          ###   ########.fr       */
+/*   Updated: 2022/04/09 20:16:41 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,15 @@
 #  define BUFFER_SIZE 1
 # endif
 
+# define INFILE 0
+# define OUTFILE 1
+
 /* STRUCTS */
 typedef struct s_global {
 	char	**path;
 	int		infile_fd;
 	int		outfile_fd;
+	int		infile_access;
 	char	**envv;
 }				t_global;
 
@@ -46,7 +50,7 @@ int			ft_strlen(const char *s);
 char		*ft_path_strjoin(char const *s1, char const *s2);
 int			ft_strncmp(const char *s1, const char *s2, int n);
 
-/* get_next_line */
+/* get_next_line_bonus.c */
 char		*ft_get_next_line(int fd);
 char		*ft_strjoin(char const *s1, char const *s2);
 
@@ -63,9 +67,6 @@ void		handle_here_doc(t_global *global, char *argv);
 
 /* init_struct_bonus.c */
 void		init_struct(t_global *global, char **env);
-
-/* test_infile_access_bonus.c */
-int			test_infile_access(t_global *global);
 
 /* memory_bonus.c */
 void		error_exit(t_global *global, char *str);

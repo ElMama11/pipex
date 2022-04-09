@@ -6,26 +6,45 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 18:31:14 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/26 14:17:22 by mverger          ###   ########.fr       */
+/*   Updated: 2022/04/09 20:15:33 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	init_struct(t_global *global, char **av, char **env)
+static int	ft_strchr_tab(char **env, char *to_find)
 {
-	global->path = ft_split(env[6], ':');
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	j = 0;
+	if (*to_find == 0)
+		return (0);
+	while (env[i])
+	{
+		k = 0;
+		while (env[i][k])
+		{
+			j = 0;
+			while (env[i][k + j] == to_find[j])
+			{
+				if (to_find[j + 1] == 0)
+					return (i);
+				j++;
+			}
+			k++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+void	init_struct(t_global *global, char **env)
+{
+	global->path = ft_split(env[ft_strchr_tab(env, "PATH=")], ':');
 	global->path[0] = ft_strtrim(global->path[0], "PATH=");
-	global->infile = av[1];
-	global->cmd1 = ft_split(av[2], ' ');
-	global->cmd2 = ft_split(av[3], ' ');
-	global->outfile = av[4];
+	global->infile_access = 1;
 	global->envv = env;
-	global->infile_fd = open(global->infile, O_RDONLY);
-	if (global->infile_fd == -1)
-		perror("infile open failed ");
-	global->outfile_fd
-		= open(global->outfile, O_CREAT | O_RDWR | O_TRUNC, 0777);
-	if (global->outfile_fd == -1)
-		perror("outfile open failed ");
 }

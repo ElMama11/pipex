@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 18:22:58 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/27 20:57:11 by mverger          ###   ########.fr       */
+/*   Updated: 2022/04/09 20:15:18 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_sstrjoin(char const *s1, char const *s2)
+char	*ft_path_strjoin(char const *s1, char const *s2)
 {
 	int		i;
 	int		j;
@@ -93,15 +93,20 @@ char	*ft_sstrjoin(char const *s1, char const *s2)
 	return (str_malloc);
 }
 
-void	ft_free_tab(char **tab)
+int	ft_strncmp(const char *s1, const char *s2, int n)
 {
-	int	i;
+	int				i;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
 	i = 0;
-	while (tab[i])
+	while ((str1[i] != '\0' || str2[i] != '\0') && i < n)
 	{
-		free(tab[i]);
+		if (str1[i] != str2[i])
+			return ((str1[i] - str2[i]));
 		i++;
 	}
-	free(tab);
+	return (0);
 }

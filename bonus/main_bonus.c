@@ -6,61 +6,61 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:55:17 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/27 21:17:56 by mverger          ###   ########.fr       */
+/*   Updated: 2022/04/09 21:14:54 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-static int	secure_open(char *file, int flag, t_global *global)
+static int	openfile(char *filename, int mode)
 {
-	int	fd;
-
-	fd = open(file, flag, 0644);
-	if (fd == -1)
-		error_exit(global, file);
-	return (fd);
+	if (mode == INFILE)
+	{
+		if (access(filename, F_OK) == -1)
+		{
+			write(2, "pipex: ", 7);
+			write(2, filename, ft_strlen(filename));
+			write(2, ": No such file or directory\n", 28);
+			return (STDIN_FILENO);
+		}
+		return (open(filename, O_RDONLY));
+	}
+	else
+		return (open(filename, O_CREAT | O_WRONLY | O_TRUNC,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH));
 }
 
-static int	open_iofiles(t_global *global, char **av, int ac)
+static void	pipex(t_global *global, char *cmd, int fd_infile)
 {
-	int	i;
-
-	i = 1;
-	global->infile_fd = secure_open(av[1], O_RDONLY, global);
-	global->outfile_fd = secure_open(av[ac - 1],
-			O_WRONLY | O_CREAT | O_TRUNC, global);
-	dup2(global->infile_fd, STDIN_FILENO);
-	return (i);
-}
-
-static void	pipex(t_global *global, char *cmd)
-{
-	int		fd[2];
 	pid_t	child;
-	int		status;
+	int		pipefd[2];
 
-	if (pipe(fd) == -1)
-		error_exit(global, "pipe");
+	pipe(pipefd);
 	child = fork();
-	if (child == -1)
-		error_exit(global, "fork");
 	if (child > 0)
 	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-		waitpid(child, &status, 0);
-		if (WEXITSTATUS(status) == EXIT_FAILURE)
-			exit(EXIT_FAILURE);
+		close(pipefd[1]);
+		dup2(pipefd[0], STDIN_FILENO);
+		waitpid(child, NULL, 0);
 	}
 	else
 	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-		exec_cmd(global, cmd);
+		close(pipefd[0]);
+		dup2(pipefd[1], STDOUT_FILENO);
+		if (fd_infile == STDIN_FILENO)
+			exit(1);
+		else
+			exec_cmd(global, cmd);
 	}
+}
+
+static int	first_exec(t_global *global, int ac, char **av)
+{
+	global->infile_fd = openfile(av[1], INFILE);
+	global->outfile_fd = openfile(av[ac - 1], OUTFILE);
+	dup2(global->infile_fd, STDIN_FILENO);
+	pipex(global, av[2], global->infile_fd);
+	return (3);
 }
 
 int	main(int ac, char **av, char **env)
@@ -74,16 +74,14 @@ int	main(int ac, char **av, char **env)
 		if (!ft_strncmp(av[1], "here_doc", 9))
 		{
 			handle_here_doc(&global, av[2]);
-			global.outfile_fd
-				= secure_open(av[ac - 1],
-					O_WRONLY | O_CREAT | O_APPEND, &global);
-			i = 2;
+			global.outfile_fd = openfile(av[ac - 1], OUTFILE);
+			i = 4;
 		}
 		else
-			i = open_iofiles(&global, av, ac);
-		while (++i < ac - 2)
-			pipex(&global, av[i]);
+			i = first_exec(&global, ac, av);
 		dup2(global.outfile_fd, STDOUT_FILENO);
+		while (i < ac - 2)
+			pipex(&global, av[i++], 1);
 		exec_cmd(&global, av[i]);
 	}
 	write(2, "Error : numbers of args invalid\n", 32);

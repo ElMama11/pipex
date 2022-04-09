@@ -6,16 +6,28 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 18:28:20 by mverger           #+#    #+#             */
-/*   Updated: 2022/03/27 20:55:16 by mverger          ###   ########.fr       */
+/*   Updated: 2022/04/09 20:15:50 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	free_all(t_global *global)
+void	ft_free_tab(char **tab)
 {
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+void	error_exit(t_global *global, char *str)
+{
+	perror(str);
 	ft_free_tab(global->path);
-	ft_free_tab(global->cmd1);
-	ft_free_tab(global->cmd2);
 	exit(EXIT_FAILURE);
 }
