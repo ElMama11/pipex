@@ -6,7 +6,7 @@
 #    By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 14:44:07 by mverger           #+#    #+#              #
-#    Updated: 2022/04/09 20:28:23 by mverger          ###   ########.fr        #
+#    Updated: 2022/04/22 16:14:33 by mverger          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ INCLUDE_PATH=include
 DEP = Makefile src/$(INCLUDE_PATH)/pipex.h
 SRC =   	cmd_process.c ft_split.c generals_utils.c \
 			ft_get_next_line.c ft_get_next_line_utils.c here_doc.c \
-			init_struct.c main.c memory.c
+			init_struct.c main.c memory.c openfile.c
 
 SRCBONUS =	cmd_process_bonus.c ft_split_bonus.c generals_utils_bonus.c \
 			ft_get_next_line_bonus.c ft_get_next_line_utils_bonus.c here_doc_bonus.c \
