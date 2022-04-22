@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:55:17 by mverger           #+#    #+#             */
-/*   Updated: 2022/04/22 18:56:36 by mverger          ###   ########.fr       */
+/*   Updated: 2022/04/22 19:08:26 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,4 @@ int	main(int ac, char **av, char **env)
 		write(2, "Error : numbers of args invalid\n", 32);
 	ft_free_tab(global.path);
 	return (EXIT_SUCCESS);
-}
+} //./pipex /dev/urandom "cat"  "head -n 10" y
