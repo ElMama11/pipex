@@ -6,7 +6,7 @@
 #    By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/20 14:44:07 by mverger           #+#    #+#              #
-#    Updated: 2022/04/22 16:14:33 by mverger          ###   ########.fr        #
+#    Updated: 2022/04/23 03:01:41 by mverger          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC =   	cmd_process.c ft_split.c generals_utils.c \
 
 SRCBONUS =	cmd_process_bonus.c ft_split_bonus.c generals_utils_bonus.c \
 			ft_get_next_line_bonus.c ft_get_next_line_utils_bonus.c here_doc_bonus.c \
-			init_struct_bonus.c main_bonus.c memory_bonus.c
+			init_struct_bonus.c main_bonus.c memory_bonus.c openfile_bonus.c
 		
 HEAD = -I ./src/$(INCLUDE_PATH)/ -I
 OBJ = $(patsubst %.c,$(PATHOBJ)/%.o,$(SRC))

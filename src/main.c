@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:55:17 by mverger           #+#    #+#             */
-/*   Updated: 2022/04/22 19:08:26 by mverger          ###   ########.fr       */
+/*   Updated: 2022/04/23 03:04:07 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,22 @@ static void	redir_last_cmd(int *pipefd, t_global *global)
 	dup2(global->outfile_fd, STDOUT_FILENO);
 }
 
+static void	parent_process(int *pipefd)
+{
+	close(pipefd[1]);
+	dup2(pipefd[0], STDIN_FILENO);
+	close(pipefd[0]);
+}
+
 static void	pipex(t_global *global, char *cmd, int fd_infile, int last_cmd)
 {
 	pid_t	child;
 	int		pipefd[2];
-	
+
 	pipe(pipefd);
 	child = fork();
 	if (child > 0)
-	{
-		close(pipefd[1]);
-		dup2(pipefd[0], STDIN_FILENO);
-	}
+		parent_process(pipefd);
 	else
 	{
 		if (last_cmd == 1)
@@ -39,6 +43,7 @@ static void	pipex(t_global *global, char *cmd, int fd_infile, int last_cmd)
 		{
 			close(pipefd[0]);
 			dup2(pipefd[1], STDOUT_FILENO);
+			close(pipefd[1]);
 		}
 		if (fd_infile == STDIN_FILENO)
 			exit(1);
@@ -81,4 +86,4 @@ int	main(int ac, char **av, char **env)
 		write(2, "Error : numbers of args invalid\n", 32);
 	ft_free_tab(global.path);
 	return (EXIT_SUCCESS);
-} //./pipex /dev/urandom "cat"  "head -n 10" y
+}

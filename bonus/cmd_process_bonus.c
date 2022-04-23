@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 19:14:16 by mverger           #+#    #+#             */
-/*   Updated: 2022/04/09 19:57:03 by mverger          ###   ########.fr       */
+/*   Updated: 2022/04/23 02:59:17 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	exec_cmd(t_global *global, char *cmd)
 
 	i = 0;
 	args = ft_split(cmd, ' ');
-	execve(cmd, args, global->envv);
+	execve(args[0], args, global->envv);
 	while (global->path[i])
 	{
 		cmd_path = ft_path_strjoin(global->path[i], args[0]);

@@ -6,7 +6,7 @@
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/01 15:47:23 by mverger           #+#    #+#             */
-/*   Updated: 2022/04/09 20:16:41 by mverger          ###   ########.fr       */
+/*   Updated: 2022/04/23 03:02:22 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,7 @@ void		init_struct(t_global *global, char **env);
 void		error_exit(t_global *global, char *str);
 void		ft_free_tab(char **tab);
 
+/* openfile_bonus.c */
+int			openfile(char *filename, int mode, t_global *global);
+int			openfile_heredoc(char *filename, t_global *global);
 #endif

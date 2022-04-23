@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   openfile.c                                         :+:      :+:    :+:   */
+/*   openfile_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mverger <mverger@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 16:13:21 by mverger           #+#    #+#             */
-/*   Updated: 2022/04/23 02:53:01 by mverger          ###   ########.fr       */
+/*   Updated: 2022/04/23 03:03:28 by mverger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 static void	check_access_outfile(t_global *global, char *filename)
 {
